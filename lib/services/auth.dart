@@ -1,4 +1,5 @@
 import 'package:demoapp/models/user.dart';
+import 'package:demoapp/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthSerice{
@@ -47,6 +48,9 @@ Future regWithEmailPass(String email, String pass) async{
   try{
     AuthResult result = await _auth.createUserWithEmailAndPassword(email: email,password: pass);
     FirebaseUser user = result.user;
+
+    //create a new firestore document for the user 
+    await DatabaseService(uid: user.uid).updateUserData('0', 'new bar member', 100);
     return _userFromFirebaseUser(user);
   }catch(e){
     print(e.toString());
