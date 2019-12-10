@@ -3,7 +3,6 @@ import 'package:demoapp/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:demoapp/services/database.dart';
 import 'package:provider/provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:demoapp/models/bar.dart';
 
 
@@ -13,8 +12,17 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     // edit menu
 
+    void _showEditPanel(){
+      showModalBottomSheet(context: context, builder: (context) {
+        return Container(
+          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+          child: Text('bottom sheet'),
+        );
+          
+        }
+      );
+    }
 
-    
    return StreamProvider<List<Bar>>.value(
      value: DatabaseService().bar,
         child: Scaffold(
@@ -34,7 +42,7 @@ class Home extends StatelessWidget {
            FlatButton.icon(
              icon: Icon(Icons.edit),
              label: Text('Edit'),
-             onPressed: () => _showSettingsPanel(),
+             onPressed: () => _showEditPanel(),
            )
          ],
        ),
